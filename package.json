@@ -16,9 +16,9 @@
     "client",
     "exceptions",
     "ajax",
-    "timeouts", 
-	"debugging",
-	"winston"
+    "timeouts",
+    "debugging",
+    "winston"
   ],
   "author": "Matt Perdeck",
   "license": "MIT",
@@ -35,5 +35,10 @@
       "jsnlog.js.map",
       "jsnlog.js"
     ]
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.1",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.2"
   }
 }
