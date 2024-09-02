@@ -22,6 +22,8 @@ declare namespace JL {
 	__JlFunctionExports__
 	
 	__ExceptionClass__
+
+	__AppenderClass__
 }
 
 // This file is listed in the typings element in the package.json file.

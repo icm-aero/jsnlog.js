@@ -1,5 +1,5 @@
 /**
-* Copyright 2017 Mattijs Perdeck.
+* Copyright 2021 Mattijs Perdeck.
 *
 * This project is licensed under the MIT license.
 * 
@@ -136,6 +136,31 @@ declare namespace JL {
 	
 		export class Exception {
 		constructor(data: any, inner?: any);
+	}
+
+
+	    export class LogItem
+    {
+        // l: level
+        // m: message
+        // n: logger name
+        // t (timeStamp) is number of milliseconds since 1 January 1970 00:00:00 UTC
+        // u: number uniquely identifying this entry for this request.
+        //
+        // Keeping the property names really short, because they will be sent in the
+        // JSON payload to the server.
+        constructor(public l: number, public m: string,
+            public n: string, public t: number, public u: number) { }
+    }
+
+
+		export class Appender {
+		constructor(
+			appenderName: string,
+			sendLogItems: (logItems: LogItem[], successCallback: () => void) => void);
+		
+		setOptions?: (options: JSNLogAppenderOptions) => JSNLogAppender;
+        sendBatch?: () => void;
 	}
 
 }

@@ -19,6 +19,8 @@ Function BuildDefinitionsFile([string]$templateFile, [string]$outputFile)
     $ambientJLDeclaration = Get-Content ".\jsnlog.AmbientJLDeclaration.txt" -Raw
     $jlFunctionExports = Get-Content ".\jsnlog.JlFunctionExports.txt" -Raw
     $exceptionClass = Get-Content ".\jsnlog.ExceptionClass.txt" -Raw
+    $appenderClass = Get-Content ".\jsnlog.AppenderClass.txt" -Raw
+    $logItemClass = Get-Content ".\jsnlog.LogItemClass.txt" -Raw
 	
     $jlFunctionExportsForInterface = $jlFunctionExports -replace "export function ", ""
 
@@ -31,6 +33,9 @@ Function BuildDefinitionsFile([string]$templateFile, [string]$outputFile)
     $input = $input -replace "__JlFunctionExports__", $jlFunctionExports
     $input = $input -replace "__JlFunctionExports.ForInterface__", $jlFunctionExportsForInterface
     $input = $input -replace "__ExceptionClass__", $exceptionClass
+    $input = $input -replace "__AppenderClass__", $appenderClass
+    $input = $input -replace "__LogItemClass__", $logItemClass
+
 
 	# Do not use Out-File, because that inserts a BOM at the start of the file, which trips up
 	# some consumers.
