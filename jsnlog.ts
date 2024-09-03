@@ -424,6 +424,9 @@ module JL
         private maxBatchSize: number = 20;
         private batchTimeout: number = 2147483647;
         private sendTimeout: number = 5000;
+        
+        protected successCallback: Function = () => {};
+        protected errorCallback: Function = () => {};
 
         // Holds all log items with levels higher than storeInBufferLevel 
         // but lower than level. These items may never be sent.
@@ -580,6 +583,8 @@ module JL
             copyProperty("maxBatchSize", options, this);
             copyProperty("batchTimeout", options, this);
             copyProperty("sendTimeout", options, this);
+            copyProperty("successCallback", options, this);
+            copyProperty("errorCallback", options, this);
 
             if (this.bufferSize < this.buffer.length) { this.buffer.length = this.bufferSize; }
 
@@ -834,7 +839,10 @@ module JL
                 var finalmsg = JSON.stringify(json);
 
                 this.xhr.send(finalmsg);
-            } catch (e) { }
+                if(this.successCallback) this.successCallback();
+            } catch (e) { 
+                if(this.errorCallback) this.errorCallback();
+            }
         }
 
         constructor(appenderName: string)
