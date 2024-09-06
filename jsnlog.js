@@ -387,6 +387,8 @@ function JL(loggerName) {
             this.maxBatchSize = 20;
             this.batchTimeout = 2147483647;
             this.sendTimeout = 5000;
+            this.successCallback = function () { };
+            this.errorCallback = function () { };
             // Holds all log items with levels higher than storeInBufferLevel 
             // but lower than level. These items may never be sent.
             this.buffer = [];
@@ -510,6 +512,8 @@ function JL(loggerName) {
             copyProperty("maxBatchSize", options, this);
             copyProperty("batchTimeout", options, this);
             copyProperty("sendTimeout", options, this);
+            copyProperty("successCallback", options, this);
+            copyProperty("errorCallback", options, this);
             if (this.bufferSize < this.buffer.length) {
                 this.buffer.length = this.bufferSize;
             }
@@ -714,8 +718,13 @@ function JL(loggerName) {
                 }
                 var finalmsg = JSON.stringify(json);
                 this.xhr.send(finalmsg);
+                if (this.successCallback)
+                    this.successCallback();
             }
-            catch (e) { }
+            catch (e) {
+                if (this.errorCallback)
+                    this.errorCallback();
+            }
         };
         return AjaxAppender;
     }(Appender));

@@ -1,0 +1,8 @@
+	export class Appender {
+		constructor(
+			appenderName: string,
+			sendLogItems: (logItems: LogItem[], successCallback: () => void) => void);
+		
+		setOptions?: (options: JSNLogAppenderOptions) => JSNLogAppender;
+        sendBatch?: () => void;
+	}

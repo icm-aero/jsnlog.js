@@ -56,6 +56,8 @@ declare namespace JL {
 		maxBatchSize?: number;
 		batchTimeout?: number;
 		sendTimeout?: number;
+		successCallback?: Function;
+		errorCallback?: Function;
 	}
 
 	interface JSNLogAjaxAppenderOptions extends JSNLogAppenderOptions {
