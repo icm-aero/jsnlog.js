@@ -512,8 +512,6 @@ function JL(loggerName) {
             copyProperty("maxBatchSize", options, this);
             copyProperty("batchTimeout", options, this);
             copyProperty("sendTimeout", options, this);
-            copyProperty("successCallback", options, this);
-            copyProperty("errorCallback", options, this);
             if (this.bufferSize < this.buffer.length) {
                 this.buffer.length = this.bufferSize;
             }
@@ -701,7 +699,13 @@ function JL(loggerName) {
                     // returns the empty response. So check on any code in the 2.. range, not just 200.
                     if ((that.xhr.readyState == 4) && (that.xhr.status >= 200 && that.xhr.status < 300)) {
                         successCallback();
+                        if (that.successCallback())
+                            that.successCallback();
                     }
+                };
+                this.xhr.onerror = function () {
+                    if (that.errorCallback)
+                        that.errorCallback();
                 };
                 var json = {
                     r: JL.requestId,
@@ -718,12 +722,8 @@ function JL(loggerName) {
                 }
                 var finalmsg = JSON.stringify(json);
                 this.xhr.send(finalmsg);
-                if (this.successCallback)
-                    this.successCallback();
             }
             catch (e) {
-                if (this.errorCallback)
-                    this.errorCallback();
             }
         };
         return AjaxAppender;

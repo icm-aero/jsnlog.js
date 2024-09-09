@@ -29,8 +29,6 @@
 		maxBatchSize?: number;
 		batchTimeout?: number;
 		sendTimeout?: number;
-		successCallback?: Function;
-		errorCallback?: Function;
 	}
 
 	interface JSNLogAjaxAppenderOptions extends JSNLogAppenderOptions {
@@ -56,6 +54,8 @@
 	interface JSNLogAppender {
 		setOptions?: (options: JSNLogAppenderOptions) => JSNLogAppender;
         sendBatch?: () => void;
+		successCallback?: Function;
+        errorCallback?: Function;
 	}
 
 	interface JSNLogAjaxAppender extends JSNLogAppender {
